@@ -11,7 +11,6 @@ namespace SendMoreMoney
     class Solver
     {
         List<char[]> permutations = new List<char[]>();
-        List<char> usedCharacters = new List<char>();
         string equation;
 
         public Solver(string equation)
@@ -19,25 +18,23 @@ namespace SendMoreMoney
             this.equation = equation;
         }
 
-        public List<char[]> DeriveAllPermutations(List<char> input)
+        public List<char[]> DeriveAllPermutations(List<char> beginning, List<char> end)
         {
-            int i;
-            char c;
-
-            for (i = 0; i < input.Count; i++)
+            if (end.Count() == 0)
             {
-                c = input.Skip(i).Take(1).ToArray()[0];
-                input.RemoveAt(i);
-                usedCharacters.Add(c);
-                if (input.Count == 0)
-                {
-                    permutations.Add(usedCharacters.ToArray());
-                }
-                DeriveAllPermutations(input);
-                input.Insert(i, c);
-                usedCharacters.RemoveAt(usedCharacters.Count - 1);
+                permutations.Add(beginning.ToArray());
             }
-
+            else
+            {
+                for(int i = 0; i < end.Count(); i++)
+                {
+                    List<char> newBeginning = new List<char>(beginning);
+                    newBeginning.Add(end[i]);
+                    List<char> newEnd = new List<char>(end);
+                    newEnd.RemoveAt(i);
+                    DeriveAllPermutations(newBeginning, newEnd);
+                }
+            }
             return permutations;
         }
 
@@ -60,8 +57,8 @@ namespace SendMoreMoney
         public bool TestEquation(string numberfiedEquation)
         {
             DataTable dt = new DataTable();
-            int lefths = Convert.ToInt32(dt.Compute(SplitEquation(numberfiedEquation)[0], ""));
-            int righths = Convert.ToInt32(dt.Compute(SplitEquation(numberfiedEquation)[1], ""));
+            int lefths = Convert.ToInt32(dt.Compute(numberfiedEquation.Split('=')[0], ""));
+            int righths = Convert.ToInt32(dt.Compute(numberfiedEquation.Split('=')[1], ""));
 
             return lefths == righths;
         }
@@ -75,11 +72,6 @@ namespace SendMoreMoney
             }
 
             return equationReplacedWithNumbers;
-        }
-
-        public string[] SplitEquation(string equation)
-        {
-            return equation.Split('=');
         }
     }
 }
