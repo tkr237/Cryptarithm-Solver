@@ -29,7 +29,7 @@ namespace SendMoreMoney
                 for(int i = 0; i < end.Count(); i++)
                 {
                     List<char> newBeginning = new List<char>(beginning);
-                    List<char> newEnd = new List<char>(end);
+                    List<char> newEnd = new List<char>(end);                
                     newBeginning.Add(end[i]);
                     newEnd.RemoveAt(i);
                     DeriveAllPermutations(newBeginning, newEnd);
@@ -50,13 +50,13 @@ namespace SendMoreMoney
                     permutationDictionary.Add(c[i], c.Length - i - 1);         
                 }
                 equationToTest = ReplaceLettersWithNumbers(permutationDictionary);
-                if (TestEquation(equationToTest)) break;
+                if (isEquivalent(equationToTest)) break;
             }
 
             Console.WriteLine(equationToTest);
         }
 
-        public bool TestEquation(string numberfiedEquation)
+        public bool isEquivalent(string numberfiedEquation)
         {
             DataTable dt = new DataTable();
             int lefths = Convert.ToInt32(dt.Compute(numberfiedEquation.Split('=')[0], ""));
