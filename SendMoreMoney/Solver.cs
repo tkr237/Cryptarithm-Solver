@@ -29,12 +29,13 @@ namespace SendMoreMoney
                 for(int i = 0; i < end.Count(); i++)
                 {
                     List<char> newBeginning = new List<char>(beginning);
-                    newBeginning.Add(end[i]);
                     List<char> newEnd = new List<char>(end);
+                    newBeginning.Add(end[i]);
                     newEnd.RemoveAt(i);
                     DeriveAllPermutations(newBeginning, newEnd);
                 }
             }
+
             return permutations;
         }
 
@@ -51,6 +52,7 @@ namespace SendMoreMoney
                 equationToTest = ReplaceLettersWithNumbers(permutationDictionary);
                 if (TestEquation(equationToTest)) break;
             }
+
             Console.WriteLine(equationToTest);
         }
 
