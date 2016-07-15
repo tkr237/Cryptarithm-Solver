@@ -13,27 +13,21 @@ namespace SendMoreMoney
             #region send + more = money
             //string query = "send + more = money";
             //Solver s = new Solver(query);
-            //List<char[]> permutations = s.DeriveAllPermutations(new List<char>(), new List<char> { 's', 'e', 'n', 'd', 'm', 'o', 'r', 'x', 'y', 'z' });
+            //List<Assignment> permutations = s.Permutations(new List<int>(), new List<int>() { 9, 8, 7, 6, 5, 4, 3, 2, 1, 0 }, new List<char>() { 's', 'e', 'n', 'd', 'm', 'o', 'r', 'y' });
             #endregion
             #region logic + logic = prolog
             //string query = "logic + logic = prolog";
             //Solver s = new Solver(query);
-            //List<char[]> permutations = s.DeriveAllPermutations(new List<char>(), new List<char> { 'l', 'o', 'g', 'i', 'c', 'p', 'r', 'a', 'b', 'd' });
+            //List<Assignment> permutations = s.Permutations(new List<int>(), new List<int>() { 9, 8, 7, 6, 5, 4, 3, 2, 1, 0 }, new List<char> { 'l', 'o', 'g', 'i', 'c', 'p', 'r', });
             #endregion
             #region kyoto + osaka = tokyo
             string query = "kyoto + osaka = tokyo";
             Solver s = new Solver(query);
-            List<char[]> permutations = s.DeriveAllPermutations(new List<char>(), new List<char> { 'k', 'y', 'o', 't', 's', 'a', 'g', 'h', 'i', 'j' });
+            List<Assignment> permutations = s.Permutations(new List<int>(), new List<int>() { 9, 8, 7, 6, 5, 4, 3, 2, 1, 0 }, new List<char> { 'k', 'y', 'o', 't', 's', 'a', });
             #endregion
-
-            //string query = "ab + ba = cc";
-            //Solver s = new Solver(query);
-            //List<char[]> permutations = s.DeriveAllPermutations(new List<char>(), new List<char>() { 'a', 'b', 'c','d' });
 
             s.TestPermutation(permutations);
             Console.ReadKey();
         }
     }
 }
-
-

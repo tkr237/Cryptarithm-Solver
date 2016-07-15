@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
@@ -10,46 +11,58 @@ namespace SendMoreMoney
 {
     class Solver
     {
-        List<char[]> permutations = new List<char[]>();
+        List<Assignment> assignments = new List<Assignment>();
+        public FileWriter fw = new FileWriter(Directory.GetCurrentDirectory() + "\\PermutationList.txt");
         string equation;
 
         public Solver(string equation)
         {
             this.equation = equation;
+            fw.DeleteFileIfExists();
         }
 
-        public List<char[]> DeriveAllPermutations(List<char> beginning, List<char> end)
+        public void Assign(List<int> numbers, List<char> letters)
         {
-            if (end.Count() == 0)
+            Assignment perm = new Assignment();
+            for (int i = 0; i < numbers.Count(); i++)
             {
-                permutations.Add(beginning.ToArray());
+                perm.assignment.Add(letters[i], numbers[i]);
+            }
+            assignments.Add(perm);
+            //fw.WriteToFile(perm);
+        }
+
+        public List<Assignment> Permutations(List<int> beginning, List<int> end, List<char> letters)
+        {
+            if (beginning.Count() == letters.Count())
+            {
+                Assign(beginning, letters);
             }
             else
             {
-                for(int i = 0; i < end.Count(); i++)
+                for (int i = 0; i < end.Count(); i++)
                 {
-                    List<char> newBeginning = new List<char>(beginning);
-                    List<char> newEnd = new List<char>(end);                
+                    List<int> newBeginning = new List<int>(beginning);
+                    List<int> newEnd = new List<int>(end);
                     newBeginning.Add(end[i]);
                     newEnd.RemoveAt(i);
-                    DeriveAllPermutations(newBeginning, newEnd);
+                    Permutations(newBeginning, newEnd, letters);
                 }
             }
 
-            return permutations;
+            return assignments;
         }
 
-        public void TestPermutation(List<char[]> permutations)
+        public void TestPermutation(List<Assignment> assignments)
         {
             string equationToTest = "";
-            foreach (char[] c in permutations)
+            foreach (Assignment a in assignments)
             {
-                Dictionary<char, int> permutationDictionary = new Dictionary<char, int>();
-                for (int i = 0; i < c.Length; i++)
+                equationToTest = equation;
+                foreach (KeyValuePair<char,int> kv in a.assignment)
                 {
-                    permutationDictionary.Add(c[i], c.Length - i - 1);         
+                    equationToTest = equationToTest.Replace(kv.Key.ToString(), kv.Value.ToString());
                 }
-                equationToTest = ReplaceLettersWithNumbers(permutationDictionary);
                 if (isEquivalent(equationToTest)) break;
             }
 
@@ -63,17 +76,6 @@ namespace SendMoreMoney
             int righths = Convert.ToInt32(dt.Compute(numberfiedEquation.Split('=')[1], ""));
 
             return lefths == righths;
-        }
-
-        public string ReplaceLettersWithNumbers(Dictionary<char, int> dict)
-        {
-            string equationReplacedWithNumbers = equation;
-            foreach (var c in dict)
-            {
-                equationReplacedWithNumbers = equationReplacedWithNumbers.Replace(c.Key.ToString(), c.Value.ToString());
-            }
-
-            return equationReplacedWithNumbers;
         }
     }
 }
