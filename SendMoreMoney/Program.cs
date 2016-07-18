@@ -21,14 +21,14 @@ namespace SendMoreMoney
             //List<Assignment> permutations = s.Permutations(new Assignment(), new List<char> { 'l', 'o', 'g', 'i', 'c', 'p', 'r', }, new List<int>() { 9, 8, 7, 6, 5, 4, 3, 2, 1, 0 });
             #endregion
             #region kyoto + osaka = tokyo
-            //string query = "kyoto + osaka = tokyo";
-            //Solver s = new Solver(query);
-            //List<Assignment> permutations = s.Permutations(new List<int>(), new List<int>() { 9, 8, 7, 6, 5, 4, 3, 2, 1, 0 }, new List<char> { 'k', 'y', 'o', 't', 's', 'a', });
+            string query = "kyoto + osaka = tokyo";
+            Solver s = new Solver(query);
+            List<Assignment> permutations = s.Permutations(new Assignment(), new List<char> { 'k', 'y', 'o', 't', 's', 'a', }, new List<int>() { 9, 8, 7, 6, 5, 4, 3, 2, 1, 0 });
             #endregion
 
-            string query = "ab + ba = cc";
-            Solver s = new Solver(query);
-            List<Assignment> permutations = s.Permutations(new Assignment(), new List<char>() { 'a', 'b', 'c', }, new List<int>() { 1, 2, 3, 4 });
+            //string query = "ab + ba = cc";
+            //Solver s = new Solver(query);
+            //List<Assignment> permutations = s.Permutations(new Assignment(), new List<char>() { 'a', 'b', 'c','d','e','f','g','h','i','j' }, new List<int>() { 1, 2, 3, 4,5,6,7,8,9,0});
 
             s.TestPermutation(permutations);
             Console.ReadKey();
