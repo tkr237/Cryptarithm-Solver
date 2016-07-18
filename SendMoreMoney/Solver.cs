@@ -87,5 +87,36 @@ namespace SendMoreMoney
 
             return lefths == righths;
         }
+
+        #region Another permutation() method
+        //public List<Assignment> Permutations(Assignment a, List<char> listOfLetters, List<int> listOfNumbers)
+        //{
+        //    if (listOfLetters.Count() == 0)
+        //    {
+        //        assignments.Add(Assignment.DeepClone(a));
+        //    }
+        //    else
+        //    {
+        //        for (int i = 0; i < listOfNumbers.Count(); i++)
+        //        {
+        //            char current_char = listOfLetters[0];
+        //            int current_number = listOfNumbers[i];
+
+        //            a.assignment.Add(current_char, current_number);
+
+        //            List<char> newListLetters = new List<char>(listOfLetters);
+        //            List<int> newListNumbers = new List<int>(listOfNumbers);
+        //            newListLetters.Remove(current_char);
+        //            newListNumbers.Remove(current_number);
+
+        //            Permutations(a, newListLetters, newListNumbers);
+
+        //            a.assignment.Remove(current_char);
+        //        }
+        //    }
+
+        //    return assignments;
+        //}
+        #endregion
     }
 }
