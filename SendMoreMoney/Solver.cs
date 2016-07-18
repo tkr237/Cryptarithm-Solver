@@ -21,36 +21,46 @@ namespace SendMoreMoney
             fw.DeleteFileIfExists();
         }
 
-        public void Assign(List<int> numbers, List<char> letters)
+        public void permForLetter(Assignment a, char c, List<char> restOfChars, List<int> listOfNumbers)
         {
-            Assignment perm = new Assignment();
-            for (int i = 0; i < numbers.Count(); i++)
-            {
-                perm.assignment.Add(letters[i], numbers[i]);
-            }
-            assignments.Add(perm);
-            //fw.WriteToFile(perm);
+            a.assignment.Add(c, listOfNumbers[0]);
+            listOfNumbers.RemoveAt(0);
+            Permutations(a, restOfChars, listOfNumbers);
         }
 
-        public List<Assignment> Permutations(List<int> beginning, List<int> end, List<char> letters)
+        public List<Assignment> Permutations(Assignment a, List<char> listOfLetters, List<int> listOfNumbers)
         {
-            if (beginning.Count() == letters.Count())
+            if (listOfLetters.Count() == 0)
             {
-                Assign(beginning, letters);
+                assignments.Add(Assignment.DeepClone(a));
+                //fw.WriteToFile(d);
             }
             else
             {
-                for (int i = 0; i < end.Count(); i++)
+                for (int i = 0; i < listOfNumbers.Count(); i++)
                 {
-                    List<int> newBeginning = new List<int>(beginning);
-                    List<int> newEnd = new List<int>(end);
-                    newBeginning.Add(end[i]);
-                    newEnd.RemoveAt(i);
-                    Permutations(newBeginning, newEnd, letters);
+                    int currentNumber = listOfNumbers[i];
+                    char currentCharacter = listOfLetters[0];
+                    List<char> restOfChars = new List<char>(listOfLetters);
+                    List<int> swappedNumbers = swap(listOfNumbers, currentNumber, i);
+
+                    restOfChars.Remove(currentCharacter);
+                    permForLetter(a, currentCharacter, restOfChars, swappedNumbers);
+                    a.assignment.Remove(currentCharacter);
                 }
             }
 
             return assignments;
+        }
+
+        public List<int> swap(List<int> list, int number, int index)
+        {
+            List<int> swappedList = new List<int>();
+            swappedList.Add(number);
+            list.Remove(number);
+            swappedList = swappedList.Concat(list).ToList();
+            list.Insert(index, number);
+            return swappedList;
         }
 
         public void TestPermutation(List<Assignment> assignments)
@@ -59,7 +69,7 @@ namespace SendMoreMoney
             foreach (Assignment a in assignments)
             {
                 equationToTest = equation;
-                foreach (KeyValuePair<char,int> kv in a.assignment)
+                foreach (KeyValuePair<char, int> kv in a.assignment)
                 {
                     equationToTest = equationToTest.Replace(kv.Key.ToString(), kv.Value.ToString());
                 }

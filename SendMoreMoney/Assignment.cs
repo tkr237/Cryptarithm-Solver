@@ -28,5 +28,17 @@ namespace SendMoreMoney
             s += "}}";
             return s;
         }
+
+        public static Assignment DeepClone(Assignment obj)
+        {
+            using (var ms = new MemoryStream())
+            {
+                var formatter = new BinaryFormatter();
+                formatter.Serialize(ms, obj);
+                ms.Position = 0;
+
+                return (Assignment)formatter.Deserialize(ms);
+            }
+        }
     }
 }
