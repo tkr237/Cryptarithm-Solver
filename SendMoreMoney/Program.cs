@@ -28,7 +28,7 @@ namespace SendMoreMoney
 
             //string query = "ab + ba = cc";
             //Solver s = new Solver(query);
-            //List<Assignment> permutations = s.Permutations(new Assignment(), new List<char>() { 'a', 'b', 'c','d','e','f','g','h','i','j' }, new List<int>() { 1, 2, 3, 4,5,6,7,8,9,0});
+            //List<Assignment> permutations = s.Permutations(new Assignment(), new List<char>() { 'a', 'b', 'c', 'd' }, new List<int>() { 1, 2, 3, 4, 5 });
 
             s.TestPermutation(permutations);
             Console.ReadKey();

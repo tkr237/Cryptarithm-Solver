@@ -32,8 +32,9 @@ namespace SendMoreMoney
         {
             if (listOfLetters.Count() == 0)
             {
-                assignments.Add(Assignment.DeepClone(a));
-                //fw.WriteToFile(d);
+                Assignment assignmentToAdd = Assignment.DeepClone(a);
+                assignments.Add(assignmentToAdd);
+                //fw.WriteToFile(assignmentToAdd);
             }
             else
             {
@@ -81,13 +82,23 @@ namespace SendMoreMoney
 
         public bool isEquivalent(string numberfiedEquation)
         {
-            DataTable dt = new DataTable();
-            int lefths = Convert.ToInt32(dt.Compute(numberfiedEquation.Split('=')[0], ""));
-            int righths = Convert.ToInt32(dt.Compute(numberfiedEquation.Split('=')[1], ""));
+            int operandOne = ConvertStringToInt(numberfiedEquation.Split('=')[0].Split('+')[0].Trim());
+            int operandTwo = ConvertStringToInt(numberfiedEquation.Split('=')[0].Split('+')[1].Trim());
+            int sum = ConvertStringToInt(numberfiedEquation.Split('=')[1].Trim());
 
-            return lefths == righths;
+            return operandOne + operandTwo == sum;
         }
 
+        public int ConvertStringToInt(string stringToConvert)
+        {
+            int sum = 0;
+            foreach (char c in stringToConvert)
+            {
+                sum *= 10;
+                sum += c - '0';
+            }
+            return sum;
+        }
         #region Another permutation() method
         //public List<Assignment> Permutations(Assignment a, List<char> listOfLetters, List<int> listOfNumbers)
         //{
