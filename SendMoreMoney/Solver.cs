@@ -21,7 +21,7 @@ namespace SendMoreMoney
             fw.DeleteFileIfExists();
         }
 
-        public void permForLetter(Assignment a, char c, List<char> restOfChars, List<int> listOfNumbers)
+        public void PermForLetter(Assignment a, char c, List<char> restOfChars, List<int> listOfNumbers)
         {
             a.assignment.Add(c, listOfNumbers[0]);
             listOfNumbers.RemoveAt(0);
@@ -43,10 +43,10 @@ namespace SendMoreMoney
                     int currentNumber = listOfNumbers[i];
                     char currentCharacter = listOfLetters[0];
                     List<char> restOfChars = new List<char>(listOfLetters);
-                    List<int> swappedNumbers = swap(listOfNumbers, currentNumber, i);
+                    List<int> swappedNumbers = Swap(listOfNumbers, currentNumber, i);
 
                     restOfChars.Remove(currentCharacter);
-                    permForLetter(a, currentCharacter, restOfChars, swappedNumbers);
+                    PermForLetter(a, currentCharacter, restOfChars, swappedNumbers);
                     a.assignment.Remove(currentCharacter);
                 }
             }
@@ -54,7 +54,7 @@ namespace SendMoreMoney
             return assignments;
         }
 
-        public List<int> swap(List<int> list, int number, int index)
+        public List<int> Swap(List<int> list, int number, int index)
         {
             List<int> swappedList = new List<int>();
             swappedList.Add(number);
@@ -66,6 +66,7 @@ namespace SendMoreMoney
 
         public void TestPermutation(List<Assignment> assignments)
         {
+            bool solutionFound = false;
             string equationToTest = "";
             foreach (Assignment a in assignments)
             {
@@ -74,13 +75,17 @@ namespace SendMoreMoney
                 {
                     equationToTest = equationToTest.Replace(kv.Key.ToString(), kv.Value.ToString());
                 }
-                if (isEquivalent(equationToTest)) break;
+                if (IsEquivalent(equationToTest))
+                {
+                    solutionFound = true;
+                    printSolution(a, equationToTest);
+                    break;
+                }
             }
-
-            Console.WriteLine(equationToTest);
+            if (!solutionFound) { Console.WriteLine("No solution found."); }
         }
 
-        public bool isEquivalent(string numberfiedEquation)
+        public bool IsEquivalent(string numberfiedEquation)
         {
             int operandOne = ConvertStringToInt(numberfiedEquation.Split('=')[0].Split('+')[0].Trim());
             int operandTwo = ConvertStringToInt(numberfiedEquation.Split('=')[0].Split('+')[1].Trim());
@@ -98,6 +103,20 @@ namespace SendMoreMoney
                 sum += c - '0';
             }
             return sum;
+        }
+
+        public void PrintSolution(Assignment a, string equationToPrint)
+        {
+            Console.WriteLine("\nAssignments:");
+            foreach(KeyValuePair<char,int> kv in a.assignment)
+            {
+                Console.WriteLine(kv.Key.ToString() + ": " + kv.Value.ToString());
+            }
+            Console.WriteLine("\n");
+            Console.WriteLine(" {0}", equationToPrint.Split('=')[0].Split('+')[0].Trim());
+            Console.WriteLine("+{0}", equationToPrint.Split('=')[0].Split('+')[1].Trim());
+            Console.WriteLine("¯¯¯¯¯");
+            Console.WriteLine("{0}\n\n", equationToPrint.Split('=')[1].Trim());
         }
         #region Another permutation() method
         //public List<Assignment> Permutations(Assignment a, List<char> listOfLetters, List<int> listOfNumbers)
