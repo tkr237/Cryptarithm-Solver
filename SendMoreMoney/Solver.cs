@@ -78,7 +78,7 @@ namespace SendMoreMoney
                 if (IsEquivalent(equationToTest))
                 {
                     solutionFound = true;
-                    printSolution(a, equationToTest);
+                    PrintSolution(a, equationToTest);
                     break;
                 }
             }
